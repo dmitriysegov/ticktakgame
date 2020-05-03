@@ -29,12 +29,11 @@ class Board extends React.Component {
     this.state = {
       squares: Array(9).fill(null),
       flag:true,
+      gameOver:false,
     };
   }
 
-  checkWin() {
-    const a = 2;
-    const copySquares = this.state.squares.slice();
+  checkWin(copySquares) {
     this.checkRow(copySquares[0], copySquares[1], copySquares[2]);
     this.checkRow(copySquares[3], copySquares[4], copySquares[5]);
     this.checkRow(copySquares[6], copySquares[7], copySquares[8]);
@@ -47,10 +46,10 @@ class Board extends React.Component {
 
   checkRow(a, b, c) {
     if (a === "X" && b === "X" && c === "X") {
-      alert("winner X");
+      this.setState({gameOver:true});
     } 
     if (a === "O" && b === "O" && c === "O") {
-      alert("winner O");
+      this.setState({gameOver:true});
     }
   }
 
@@ -67,7 +66,7 @@ class Board extends React.Component {
     }
     this.setState({flag:!flag});
     this.setState({squares:copySquares}); 
-    this.checkWin();
+    this.checkWin(copySquares);
   }
 
   renderSquare(i) {
@@ -76,7 +75,7 @@ class Board extends React.Component {
   
   render() {
     const status = 'Next player: X';
-
+    const {gameOver} = this.state;
     return (
       <div>
         <div className="status">{status}</div>
@@ -89,7 +88,11 @@ class Board extends React.Component {
         <div className="board-row">
           {this.renderSquare(6)}{this.renderSquare(7)}{this.renderSquare(8)}
         </div>
-        
+        {
+          gameOver && 
+        (<h3>
+          Game Over
+        </h3>)}
       </div>
     );
   }
