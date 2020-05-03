@@ -33,6 +33,7 @@ class Board extends React.Component {
   }
 
   checkWin() {
+    const a = 1;
     const copySquares = this.state.squares.slice();
     this.checkRow(copySquares[0], copySquares[1], copySquares[2]);
     this.checkRow(copySquares[3], copySquares[4], copySquares[5]);
